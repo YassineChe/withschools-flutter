@@ -46,9 +46,11 @@ class _JourneysSheetState extends State<JourneysSheet> {
                       ...journeyController.journeys!.map(
                         (journey) => Card(
                           elevation: 1,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                            side: BorderSide(width: 1),
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
+                            borderRadius: const BorderRadius.all(Radius.circular(12)),
                           ),
                           child: Theme(
                             data: Theme.of(context).copyWith(dividerColor: transparent),
@@ -65,10 +67,10 @@ class _JourneysSheetState extends State<JourneysSheet> {
                               children: [
                                 //@driver
                                 ListTile(
-                                  leading: AvatarWidget(
-                                    elevation: 1,
-                                    path: journey.driver?.avatar,
-                                  ),
+                                  // leading: AvatarWidget(
+                                  //   elevation: 1,
+                                  //   path: journey.driver?.avatar,
+                                  // ),
                                   title: Text(journey.driver!.fullName.toString()),
                                   subtitle: const Text('Conducteur'),
                                   trailing: const Icon(Icons.chevron_right),
@@ -148,7 +150,14 @@ class _JourneysSheetState extends State<JourneysSheet> {
                                   children: [
                                     TextButton(
                                       child: const Text('Commencer le voyage'),
-                                      onPressed: () => {},
+                                      onPressed: () => {
+                                        //@get tutors journey
+                                        journeyController.getTutorsJourneyPrepareMap(
+                                          journeyId: journey.id,
+                                        ),
+                                        //@close modal
+                                        Get.back(),
+                                      },
                                     )
                                   ],
                                 )

@@ -186,6 +186,8 @@ class HttpService {
               break;
 
             default:
+              print(e.toString());
+
               SnackbarHelper().errorSnackBar(
                 title: 'Erreur',
                 message: 'Oops! Something went wrong. Please try again later or contact support for assistance.',

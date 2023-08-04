@@ -1,4 +1,3 @@
-import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -10,9 +9,6 @@ import 'package:withschools/middlewares/guards_middleware.dart';
 import 'package:withschools/views/login_view.dart';
 import 'package:withschools/views/supervisor/supervisor_clue_view.dart';
 import 'package:withschools/themes/color_schemes.dart';
-
-//@constants
-import 'configs/colors.dart';
 
 Future<void> main() async {
   //* WAiT To INIt ************************************************************/

@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:withschools/models/journey.dart';
+import 'package:withschools/models/tutor.dart';
 import 'package:withschools/services/http_service.dart';
 
 class JourneyRepo {
@@ -23,7 +25,19 @@ class JourneyRepo {
 
       return (response?.data as List<dynamic>).map((journey) => Journey.fromJson(journey)).toList();
     } catch (e) {
-      print(e);
+      return null;
+    }
+  }
+
+  Future<dynamic> tryGetTutorsJourney({@required journeyId}) async {
+    try {
+      final response = await _httpService?.fetchData(
+        endpoint: '/get/tutors/journey/$journeyId',
+        related: 'get-tutors',
+      );
+
+      return (response?.data as List<dynamic>).map((tutor) => Tutor.fromJson(tutor)).toList();
+    } catch (e) {
       return null;
     }
   }
