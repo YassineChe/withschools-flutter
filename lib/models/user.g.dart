@@ -16,7 +16,9 @@ User _$UserFromJson(Map<String, dynamic> json) => User()
   ..guard = json['guard'] as String?
   ..token = json['token'] as String?
   ..avatar = json['avatar'] as String?
-  ..location = json['location'] as String?
+  ..school = json['school'] == null
+      ? null
+      : School.fromJson(json['school'] as Map<String, dynamic>)
   ..locale = json['locale'] as String?
   ..createdAt = json['created_at'] as String?;
 
@@ -30,7 +32,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'guard': instance.guard,
       'token': instance.token,
       'avatar': instance.avatar,
-      'location': instance.location,
+      'school': instance.school,
       'locale': instance.locale,
       'created_at': instance.createdAt,
     };

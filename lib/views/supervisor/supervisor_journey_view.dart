@@ -26,11 +26,18 @@ class _SupervisorJourneyViewState extends State<SupervisorJourneyView> {
         appBar: AppBar(
           title: const Text('Voyage'),
           actions: [
-            TextButton.icon(
-              onPressed: () => {journeyController.setStartJourney(true)},
-              icon: Icon(Icons.done),
-              label: Text('cc'),
-            )
+            if (journeyController.getStartJourney.value)
+              TextButton.icon(
+                onPressed: () => {journeyController.setStartJourney(false)},
+                icon: const Icon(Icons.pause),
+                label: const Text('Arrêter'),
+              ),
+            if (!journeyController.getStartJourney.value)
+              TextButton.icon(
+                onPressed: () => {journeyController.setStartJourney(true)},
+                icon: const Icon(Icons.play_circle),
+                label: const Text('Commencer'),
+              ),
           ],
         ),
         body: LoadingOverlay(

@@ -1,10 +1,12 @@
 import 'package:get_storage/get_storage.dart';
+import 'package:withschools/models/user.dart';
 
 class AuthHelper {
   final box = GetStorage();
 
-  Future makePrefes(user) async {
+  Future makePrefes(User user) async {
     final box = GetStorage();
+    //@user
     box.write('id', user.id.toString());
     box.write('fullName', user.fullName.toString());
     box.write('firstName', user.firstName.toString());
@@ -15,6 +17,9 @@ class AuthHelper {
     box.write('guard', user.guard.toString());
     box.write('token', user.token.toString());
     box.write('locale', user.locale.toString());
+    //@school
+    box.write('lat', user.school?.lat.toString());
+    box.write('lng', user.school?.lng.toString());
   }
 
   // Getter method to retrieve the stored token

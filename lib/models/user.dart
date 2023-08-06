@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'school.dart';
 part 'user.g.dart';
 
 @JsonSerializable()
@@ -34,8 +35,8 @@ class User {
   @JsonKey(name: 'avatar')
   String? avatar;
 
-  @JsonKey(name: 'location')
-  String? location;
+  @JsonKey(name: 'school')
+  School? school;
 
   @JsonKey(name: 'locale')
   String? locale;

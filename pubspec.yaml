@@ -81,7 +81,6 @@ flutter:
     - assets/svg/no-data.svg
     - assets/png/bus.png
     - assets/certs/mqtt.crt
-    - assets/certs/mqtt.pem
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

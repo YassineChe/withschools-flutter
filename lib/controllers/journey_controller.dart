@@ -44,6 +44,8 @@ class JourneyController extends GetxController {
 
   //@setters
   setStartJourney(bool value) => startJourney.value = value;
+  //@getters
+  RxBool get getStartJourney => startJourney;
 
   //@constructors
   JourneyController() {
@@ -66,58 +68,67 @@ class JourneyController extends GetxController {
     //@ever start journey flag changes
     ever(startJourney, (status) {
       if (status) {
-        //@put bus marker on map
-        locationService?.getStreamCoordinate.listen((coordinate) async {
-          Get.snackbar('Coordinates', '${coordinate.lat} ${coordinate.lng}');
-          //@buses moved
-          markers[const MarkerId('bus')] = await MarkerBuilder().buildCircularImageAsset(
-            markerId: const MarkerId('bus'),
-            title: 'Bus',
-            assetPath: 'assets/png/bus.png',
-            coordinates: LatLng(coordinate.lat!, coordinate.lng!),
-          );
+        locationService?.positionStream?.resume();
+        geofencingService?.geofenceService.resume();
+      } else {
+        locationService?.positionStream?.pause();
+        geofencingService?.geofenceService.pause();
+      }
+    });
 
-          //@publish mqtt with current coordinates
-          mqttService?.publish(
-            topic: 'topic',
-            message: {'lat': coordinate.lat, 'lng': coordinate.lng},
-          );
-        });
-        //@start geofencing
-        geofencingService?.start((geofence, geofenceRadius, geofenceStatus, location) async {
-          //@geofence inter
-          if (geofenceStatus == GeofenceStatus.ENTER) {
-            //@post Geofence intered
-            final response = await _geofenceRepo?.tryPostGeofenceEnterTutor(
-              tutorId: geofence.id,
-            );
+    //@put bus marker on map
+    locationService?.getStreamCoordinate.listen((coordinate) async {
+      if (getStartJourney.isTrue) {
+        print('${coordinate.lat} ${coordinate.lng}');
+        //@buses moved
+        markers[const MarkerId('bus')] = await MarkerBuilder().buildCircularImageAsset(
+          markerId: const MarkerId('bus'),
+          title: 'Bus',
+          assetPath: 'assets/png/bus.png',
+          coordinates: LatLng(coordinate.lat!, coordinate.lng!),
+        );
 
-            if (response is Callback) {
-              // Get.snackbar(geofence.id.toString(), 'entered');
-            }
-          }
+        //@publish mqtt with current coordinates
+        mqttService?.publish(
+          topic: 'topic',
+          message: {'lat': coordinate.lat, 'lng': coordinate.lng},
+        );
+      }
+    });
 
-          // @geofence dwell
-          if (geofenceStatus == GeofenceStatus.DWELL) {
-            final response = await _geofenceRepo?.tryPostGeofenceDwellTutor(
-              tutorId: geofence.id,
-            );
+    //@start geofencing
+    geofencingService?.start((geofence, geofenceRadius, geofenceStatus, location) async {
+      //@geofence inter
+      if (geofenceStatus == GeofenceStatus.ENTER) {
+        //@post Geofence intered
+        final response = await _geofenceRepo?.tryPostGeofenceEnterTutor(
+          tutorId: geofence.id,
+        );
 
-            if (response is Callback) {
-              // Get.snackbar(geofence.id.toString(), 'dwell');
-            }
-          }
+        if (response is Callback) {
+          // Get.snackbar(geofence.id.toString(), 'entered');
+        }
+      }
 
-          // @geofence exit
-          if (geofenceStatus == GeofenceStatus.EXIT) {
-            //remove geofence
-            geofencingService?.removeGeofence(geofenceId: geofence.id);
-            //remove marker
-            markers.removeWhere((key, value) => key == MarkerId(geofence.id));
-            //remove circle
-            circles.removeWhere((key, value) => key == CircleId(geofence.id));
-          }
-        });
+      // @geofence dwell
+      if (geofenceStatus == GeofenceStatus.DWELL) {
+        final response = await _geofenceRepo?.tryPostGeofenceDwellTutor(
+          tutorId: geofence.id,
+        );
+
+        if (response is Callback) {
+          // Get.snackbar(geofence.id.toString(), 'dwell');
+        }
+      }
+
+      // @geofence exit
+      if (geofenceStatus == GeofenceStatus.EXIT) {
+        //remove geofence
+        geofencingService?.removeGeofence(geofenceId: geofence.id);
+        //remove marker
+        markers.removeWhere((key, value) => key == MarkerId(geofence.id));
+        //remove circle
+        circles.removeWhere((key, value) => key == CircleId(geofence.id));
       }
     });
   }
