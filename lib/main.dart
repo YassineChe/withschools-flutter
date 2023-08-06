@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:withschools/bindings/auth_binding.dart';
 import 'package:withschools/bindings/init_binding.dart';
 import 'package:withschools/bindings/supervisor_clue_binding.dart';
+import 'package:withschools/configs/colors.dart';
 import 'package:withschools/middlewares/guards_middleware.dart';
 import 'package:withschools/views/login_view.dart';
 import 'package:withschools/views/supervisor/supervisor_clue_view.dart';
@@ -32,21 +33,18 @@ class MyApp extends StatelessWidget {
       title: 'WithSchools',
       //@themes schemes light
       theme: ThemeData(
+        colorScheme: const ColorScheme.light(
+          primary: primary,
+          secondary: secondary,
+          background: background,
+          brightness: Brightness.light,
+        ),
         useMaterial3: true,
         textTheme: GoogleFonts.jostTextTheme(),
-        colorScheme: lightColorScheme,
         appBarTheme: const AppBarTheme(
           centerTitle: false,
         ),
       ),
-      //@themes schemes dark
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        textTheme: GoogleFonts.jostTextTheme(),
-        colorScheme: darkColorScheme,
-        appBarTheme: const AppBarTheme(centerTitle: false),
-      ),
-      // themeMode: ThemeMode.dark,
       //@pages
       getPages: [
         //? ---------------------- SUERBVISOR VIEWS ------------------------? //

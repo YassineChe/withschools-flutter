@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animarker/flutter_map_marker_animation.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -42,7 +41,7 @@ class _SupervisorJourneyViewState extends State<SupervisorJourneyView> {
                 markers: journeyController.markers.values.toSet(),
                 circles: journeyController.circles.values.toSet(),
                 myLocationButtonEnabled: false,
-                zoomControlsEnabled: false, // Set to false to hide zoom in/out controls
+                zoomControlsEnabled: false,
                 mapToolbarEnabled: false,
                 initialCameraPosition: const CameraPosition(
                   target: LatLng(34.996454, -5.908670),

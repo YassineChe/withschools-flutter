@@ -8,18 +8,34 @@ class GeofenceRepo {
 
   //@constructor
   GeofenceRepo() {
-    //* Check injection
+    //@injections
     _httpService = Get.find<HttpService>();
-    //* Inits
+    //@inits
     _httpService?.init();
   }
 
-  Future<dynamic> tryPostGeofenceEntered({String? tutorId}) async {
+  //@post geofence enter tutor
+  Future<dynamic> tryPostGeofenceEnterTutor({String? tutorId}) async {
     try {
       final response = await _httpService?.postData(
-        endpoint: '/post/geofence/entered/tutor',
+        endpoint: '/post/geofence/enter/tutor',
         data: {'tutor_id': tutorId},
         related: 'post-geofence-entered',
+      );
+
+      return Callback.fromJson(response?.data);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  //@post genfence dwell tutor
+  Future<dynamic> tryPostGeofenceDwellTutor({String? tutorId}) async {
+    try {
+      final response = await _httpService?.postData(
+        endpoint: '/post/geofence/dwell/tutor',
+        data: {'tutor_id': tutorId},
+        related: 'post-geofence-dwell',
       );
 
       return Callback.fromJson(response?.data);

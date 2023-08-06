@@ -61,16 +61,16 @@ class _JourneysSheetState extends State<JourneysSheet> {
                               ),
                               title: Text(
                                 journey.name.toString(),
-                                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                                style: Theme.of(context).textTheme.headlineSmall,
                               ),
                               subtitle: Text(journey.createdAt.toString()),
                               children: [
                                 //@driver
                                 ListTile(
-                                  // leading: AvatarWidget(
-                                  //   elevation: 1,
-                                  //   path: journey.driver?.avatar,
-                                  // ),
+                                  leading: AvatarWidget(
+                                    elevation: 1,
+                                    path: journey.driver?.avatar,
+                                  ),
                                   title: Text(journey.driver!.fullName.toString()),
                                   subtitle: const Text('Conducteur'),
                                   trailing: const Icon(Icons.chevron_right),
@@ -127,14 +127,12 @@ class _JourneysSheetState extends State<JourneysSheet> {
                                           Align(
                                             widthFactor: .6,
                                             child: CircleAvatar(
-                                              backgroundColor: Theme.of(context).colorScheme.tertiary,
                                               radius: 13,
                                               child: FittedBox(
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(3),
                                                   child: Text(
                                                     '+${journey.studentsCount! - 8}',
-                                                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                                                   ),
                                                 ),
                                               ),

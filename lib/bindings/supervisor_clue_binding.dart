@@ -1,12 +1,13 @@
 import 'package:get/get.dart';
-import 'package:withschools/controllers/geofence_controller.dart';
-import 'package:withschools/helpers/callback_helper.dart';
-import 'package:withschools/repositories/geofence_repository.dart';
-import 'package:withschools/repositories/journey_repository.dart';
-import 'package:withschools/services/http_service.dart';
-//@injections
+//@controllers
 import '/controllers/supervisor_clue_controller.dart';
 import '/controllers/journey_controller.dart';
+//@repositories
+import '/repositories/geofence_repository.dart';
+import '/repositories/journey_repository.dart';
+//@services & helpers
+import '/helpers/callback_helper.dart';
+import '/services/http_service.dart';
 
 class SupervisorClueBinding extends Bindings {
   @override
@@ -19,7 +20,6 @@ class SupervisorClueBinding extends Bindings {
     //@controllers
     Get.put<SupervisorClueController>(SupervisorClueController());
     Get.put<JourneyController>(JourneyController());
-    Get.put<GeofenceController>(GeofenceController());
     //@services
     Get.put<HttpService>(HttpService());
   }

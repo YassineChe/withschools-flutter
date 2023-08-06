@@ -50,7 +50,7 @@ dependencies:
       url: https://github.com/YassineChe/custom_marker.git
   geolocator: ^9.0.2
   geofence_service: ^4.0.0
-  flutter_animarker: ^3.2.0
+  mqtt_client: ^10.0.0
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +80,8 @@ flutter:
     - assets/app/ws-logo.svg
     - assets/svg/no-data.svg
     - assets/png/bus.png
+    - assets/certs/mqtt.crt
+    - assets/certs/mqtt.pem
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
