@@ -11,7 +11,7 @@ class MqttService {
   MqttServerClient? client;
 
   //@inits
-  init() async {
+  init({String? username, String? password}) async {
     try {
       //Init the client
       client = MqttServerClient.withPort(
@@ -32,7 +32,7 @@ class MqttService {
       client?.securityContext = securityContext;
 
       //Conntect
-      await client?.connect('demo_school', 'demo_school@2023');
+      await client?.connect(username, password);
     } catch (e) {
       print('------------------------------------------');
       print(e.toString());

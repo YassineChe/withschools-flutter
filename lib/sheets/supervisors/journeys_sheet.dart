@@ -9,7 +9,7 @@ import 'package:withschools/widgets/global/avatar_widget.dart';
 //@controllers
 import '/controllers/journey_controller.dart';
 //@widges
-import '../../widgets/global/no_data_widget.dart';
+import '/widgets/global/no_data_widget.dart';
 
 class JourneysSheet extends StatefulWidget {
   const JourneysSheet({super.key});
@@ -37,7 +37,7 @@ class _JourneysSheetState extends State<JourneysSheet> {
     return Obx(
       () {
         return SizedBox(
-          height: Get.height * .5,
+          height: Get.height * .75,
           child: LoadingOverlay(
             isLoading: journeyController.callbackHelper!.isBusy(related: 'get-journeys').isTrue,
             child: journeyController.journeys!.isNotEmpty
@@ -121,6 +121,7 @@ class _JourneysSheetState extends State<JourneysSheet> {
                                                 borderWidth: 2,
                                                 raduis: 13,
                                                 path: journey.students![i].avatar,
+                                                viewer: false,
                                               ),
                                             ),
                                         if (journey.studentsCount! > 8)

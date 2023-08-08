@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-
-import 'package:withschools/controllers/journey_controller.dart';
-import 'package:withschools/sheets/supervisors/journeys_sheet.dart';
+import 'package:get/get.dart';
+//@sheet
+import '/sheets/supervisors/journeys_sheet.dart';
+//@controllers
+import '/controllers/journey_controller.dart';
 
 class SupervisorJourneyView extends StatefulWidget {
   const SupervisorJourneyView({super.key});
@@ -26,18 +27,19 @@ class _SupervisorJourneyViewState extends State<SupervisorJourneyView> {
         appBar: AppBar(
           title: const Text('Voyage'),
           actions: [
-            if (journeyController.getStartJourney.value)
-              TextButton.icon(
-                onPressed: () => {journeyController.setStartJourney(false)},
-                icon: const Icon(Icons.pause),
-                label: const Text('Arrêter'),
-              ),
-            if (!journeyController.getStartJourney.value)
-              TextButton.icon(
-                onPressed: () => {journeyController.setStartJourney(true)},
-                icon: const Icon(Icons.play_circle),
-                label: const Text('Commencer'),
-              ),
+            TextButton.icon(
+              onPressed: () => {
+                showBarModalBottomSheet(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                  ),
+                  context: context,
+                  builder: (context) => const JourneysSheet(),
+                )
+              },
+              icon: const Icon(Icons.route_rounded),
+              label: const Text('Voyages'),
+            ),
           ],
         ),
         body: LoadingOverlay(
@@ -50,9 +52,13 @@ class _SupervisorJourneyViewState extends State<SupervisorJourneyView> {
                 myLocationButtonEnabled: false,
                 zoomControlsEnabled: false,
                 mapToolbarEnabled: false,
-                initialCameraPosition: const CameraPosition(
-                  target: LatLng(34.996454, -5.908670),
-                  zoom: 15,
+                onCameraMove: (CameraPosition cameraPosition) => {
+                  journeyController.setFingerUsed(true),
+                  journeyController.sertZoom(cameraPosition.zoom),
+                },
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(journeyController.getSchoolLat, journeyController.getSchoolLng),
+                  zoom: journeyController.getZoom,
                 ),
                 onMapCreated: (GoogleMapController controller) {
                   if (!journeyController.googleMapController.isCompleted) {
@@ -66,19 +72,16 @@ class _SupervisorJourneyViewState extends State<SupervisorJourneyView> {
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            //@bus focus
             FloatingActionButton(
-              tooltip: 'Voyages',
-              child: const Icon(Icons.route),
-              onPressed: () {
-                showBarModalBottomSheet(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.zero,
-                  ),
-                  context: context,
-                  builder: (context) => const JourneysSheet(),
-                );
+              tooltip: 'Autobus',
+              child: const Icon(Icons.directions_bus),
+              onPressed: () => {
+                journeyController.sertZoom(17),
+                journeyController.focusOnBus(),
+                journeyController.setFingerUsed(false),
               },
-            )
+            ),
           ],
         ),
       );

@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
-import 'package:withschools/models/callback.dart';
-import 'package:withschools/services/http_service.dart';
+//@models
+import '/models/callback.dart';
+//@services
+import '/services/http_service.dart';
 
 class GeofenceRepo {
   //@injections

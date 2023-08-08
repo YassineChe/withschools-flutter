@@ -20,16 +20,9 @@ class StatisticCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: Get.height * .14,
-      width: Get.width * .6,
       child: LoadingOverlay(
         isLoading: isLoading ?? false,
         child: Card(
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: Theme.of(context).colorScheme.outline,
-            ),
-            borderRadius: const BorderRadius.all(Radius.circular(15)),
-          ),
           elevation: 2,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

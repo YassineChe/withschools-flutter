@@ -12,6 +12,7 @@ class AvatarWidget extends StatelessWidget {
   final Color borderColor;
   final double elevation;
   final double borderWidth;
+  final bool viewer;
 
   const AvatarWidget({
     Key? key,
@@ -22,6 +23,7 @@ class AvatarWidget extends StatelessWidget {
     this.elevation = 5,
     this.borderColor = white,
     this.borderWidth = 0,
+    this.viewer = true,
   }) : super(key: key);
 
   @override
@@ -39,7 +41,7 @@ class AvatarWidget extends StatelessWidget {
       borderColor: borderColor,
       borderWidth: borderWidth,
       onTap: () {
-        if (path != null) {
+        if (path != null && viewer) {
           showImageViewer(
             context,
             Image.network(

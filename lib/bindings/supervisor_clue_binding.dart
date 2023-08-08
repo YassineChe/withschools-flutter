@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:withschools/repositories/mqtt_respository.dart';
 //@controllers
 import '/controllers/supervisor_clue_controller.dart';
 import '/controllers/journey_controller.dart';
@@ -17,6 +18,7 @@ class SupervisorClueBinding extends Bindings {
     //@repositories
     Get.put<JourneyRepo>(JourneyRepo());
     Get.put<GeofenceRepo>(GeofenceRepo());
+    Get.put<MqttRepo>(MqttRepo());
     //@controllers
     Get.put<SupervisorClueController>(SupervisorClueController());
     Get.put<JourneyController>(JourneyController());
