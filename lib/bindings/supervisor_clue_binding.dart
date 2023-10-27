@@ -13,6 +13,8 @@ import '/services/http_service.dart';
 class SupervisorClueBinding extends Bindings {
   @override
   void dependencies() {
+    //@services
+    Get.put<HttpService>(HttpService());
     //@helpers
     Get.put<CallbackHelper>(CallbackHelper());
     //@repositories
@@ -22,7 +24,5 @@ class SupervisorClueBinding extends Bindings {
     //@controllers
     Get.put<SupervisorClueController>(SupervisorClueController());
     Get.put<JourneyController>(JourneyController());
-    //@services
-    Get.put<HttpService>(HttpService());
   }
 }

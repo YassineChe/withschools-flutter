@@ -151,7 +151,7 @@ class _JourneysSheetState extends State<JourneysSheet> {
                                       child: const Text('Commencer le voyage'),
                                       onPressed: () => {
                                         //@get tutors journey
-                                        journeyController.getTutorsJourneyPrepareMap(
+                                        journeyController.startJourney(
                                           journeyId: journey.id,
                                         ),
                                         //@close modal

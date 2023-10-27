@@ -49,12 +49,14 @@ class JourneyController extends GetxController {
   //@vars
   RxBool fingerUsed = false.obs;
   double zoom = 12;
+  int? selectedJourneyId;
   //@setters
   setFingerUsed(bool value) => fingerUsed.value = value;
   sertZoom(double value) => zoom = value;
   //@getters
   RxBool get getFingerUsed => fingerUsed;
   double get getZoom => zoom;
+  int? get getSelectedJourneyId => selectedJourneyId;
   double get getSchoolLat => double.parse(box.read('lat') ?? '0.0');
   double get getSchoolLng => double.parse(box.read('lng') ?? '0.0');
 
@@ -144,14 +146,16 @@ class JourneyController extends GetxController {
   }
 
   //@get tutors of journey
-  Future<dynamic> getTutorsJourneyPrepareMap({@required journeyId}) async {
+  Future<dynamic> startJourney({@required journeyId}) async {
     final response = await _journeyRepo?.tryGetTutorsJourney(
       journeyId: journeyId,
     );
 
     if (response is List<Tutor>) {
+      //store localy this selected ID
+      selectedJourneyId = journeyId;
       //@clear markers & circles & geofences
-      markers.clear();
+      markers.removeWhere((markerId, marker) => markerId != const MarkerId('bus'));
       circles.clear();
       geofencingService?.geofenceList.clear();
       //@foeach tutors
@@ -205,7 +209,8 @@ class JourneyController extends GetxController {
           Get.snackbar('title', 'message');
           //@post Geofence intered
           final response = await _geofenceRepo?.tryPostGeofenceEnterTutor(
-            tutorId: geofence.id,
+            tutorId: int.parse(geofence.id),
+            journeyId: selectedJourneyId,
           );
 
           if (response is Callback) {
@@ -216,7 +221,8 @@ class JourneyController extends GetxController {
         // @geofence dwell
         if (geofenceStatus == GeofenceStatus.DWELL) {
           final response = await _geofenceRepo?.tryPostGeofenceDwellTutor(
-            tutorId: geofence.id,
+            tutorId: int.parse(geofence.id),
+            journeyId: selectedJourneyId,
           );
 
           if (response is Callback) {
@@ -237,6 +243,17 @@ class JourneyController extends GetxController {
     }
   }
 
+  //@stop joruney
+  void stopJourney() {
+    selectedJourneyId = null;
+    geofencingService?.geofenceList.clear();
+    geofencingService?.geofenceService.clearAllListeners();
+    geofencingService?.geofenceService.stop();
+    markers.removeWhere((markerId, marker) => markerId != const MarkerId('bus'));
+    circles.clear();
+  }
+
+  //@focus on the bus
   void focusOnBus() async {
     if (_coordinate.lat != null && _coordinate.lng != null) {
       await googleMapController.future.then(

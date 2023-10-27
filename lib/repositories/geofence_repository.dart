@@ -17,12 +17,12 @@ class GeofenceRepo {
   }
 
   //@post geofence enter tutor
-  Future<dynamic> tryPostGeofenceEnterTutor({String? tutorId}) async {
+  Future<dynamic> tryPostGeofenceEnterTutor({int? tutorId, int? journeyId}) async {
     try {
       final response = await _httpService?.postData(
-        endpoint: '/post/geofence/enter/tutor',
-        data: {'tutor_id': tutorId},
-        related: 'post-geofence-entered',
+        endpoint: '/post/geofence/enter',
+        data: {'tutor_id': tutorId, 'journey_id': journeyId},
+        related: 'callback-geofence',
       );
 
       return Callback.fromJson(response?.data);
@@ -32,12 +32,12 @@ class GeofenceRepo {
   }
 
   //@post genfence dwell tutor
-  Future<dynamic> tryPostGeofenceDwellTutor({String? tutorId}) async {
+  Future<dynamic> tryPostGeofenceDwellTutor({int? tutorId, int? journeyId}) async {
     try {
       final response = await _httpService?.postData(
-        endpoint: '/post/geofence/dwell/tutor',
-        data: {'tutor_id': tutorId},
-        related: 'post-geofence-dwell',
+        endpoint: '/post/geofence/dwell',
+        data: {'tutor_id': tutorId, 'journey_id': journeyId},
+        related: 'callback-geofence',
       );
 
       return Callback.fromJson(response?.data);

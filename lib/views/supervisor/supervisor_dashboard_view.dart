@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_overlay/loading_overlay.dart';
-import 'package:withschools/configs/colors.dart';
-import 'package:withschools/widgets/cards/statistic_card_widget.dart';
-import 'package:withschools/widgets/global/avatar_widget.dart';
+//@configs
+import '/configs/colors.dart';
+//@widgets
+import '/widgets/global/avatar_widget.dart';
 
 class SupervisorDashboardView extends StatefulWidget {
   const SupervisorDashboardView({super.key});
@@ -21,11 +22,11 @@ class _SupervisorDashboardViewState extends State<SupervisorDashboardView> {
         actions: [
           IconButton(
             onPressed: () => {},
-            icon: Icon(Icons.notifications_outlined),
+            icon: const Icon(Icons.notifications_outlined),
           ),
           IconButton(
             onPressed: () => {},
-            icon: Icon(Icons.messenger_outline),
+            icon: const Icon(Icons.messenger_outline),
           ),
         ],
       ),

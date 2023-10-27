@@ -27,19 +27,27 @@ class _SupervisorJourneyViewState extends State<SupervisorJourneyView> {
         appBar: AppBar(
           title: const Text('Voyage'),
           actions: [
-            TextButton.icon(
-              onPressed: () => {
-                showBarModalBottomSheet(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.zero,
-                  ),
-                  context: context,
-                  builder: (context) => const JourneysSheet(),
-                )
-              },
-              icon: const Icon(Icons.route_rounded),
-              label: const Text('Voyages'),
-            ),
+            if (journeyController.getSelectedJourneyId == null) ...[
+              TextButton.icon(
+                onPressed: () => {
+                  showBarModalBottomSheet(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                    context: context,
+                    builder: (context) => const JourneysSheet(),
+                  )
+                },
+                icon: const Icon(Icons.route_rounded),
+                label: const Text('Voyages'),
+              ),
+            ] else ...[
+              TextButton.icon(
+                onPressed: () => {journeyController.stopJourney()},
+                icon: const Icon(Icons.stop_circle),
+                label: const Text('Arrêter le voyage'),
+              ),
+            ],
           ],
         ),
         body: LoadingOverlay(
